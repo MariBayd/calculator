@@ -3,27 +3,34 @@ import java.awt.*;
 import java.awt.Font;
 
 class calculator {
+    private JFrame jfrm = new JFrame("Calculator");
+    private JTextArea text = new JTextArea();
 
     calculator() {
-       //создание окна
-        JFrame jfrm = new JFrame("Calculator");
-        jfrm.setSize(250, 300);
+        //окно
+        setFrame(250, 300);
+        //шрифт
+        setFont(32);
+        //скомпанованный виджет
+        jfrm.add(setPanel());
+        jfrm.setVisible(true);
+    }
+    public void setFrame(int width, int height){
+        jfrm.setSize(width, height);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //текстовое поле
-        JTextArea text = new JTextArea();
-        Font font = new Font(Font.SERIF, Font.BOLD, 32);
+    }
+    public void setFont(int size){
+        Font font = new Font(Font.SERIF, Font.BOLD, size);
         text.setFont(font);
-        JScrollPane scroll = new JScrollPane(text);
-
+    }
+    private JPanel setPanel(){
         //компановщик
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JScrollPane scroll = new JScrollPane(text);
         panel.add(scroll);
         panel.add(InitUI());
-
-        jfrm.add(panel);
-        jfrm.setVisible(true);
+        return panel;
     }
     private JPanel InitUI(){
 
