@@ -1,8 +1,30 @@
 import javax . swing.*;
 import java.awt.*;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-class UI extends JPanel{
+class UI extends JPanel implements ActionListener {
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+       //если нажали C
+        if (e.getSource() == bC) {
+            textArea.setText("");
+            listenerClick.buttonC();
+            return;
+        }
+        if (e.getSource() == bEquality){
+            System.out.println("textarea:" + textArea.getText());
+            listenerClick.buttonEq(textArea.getText());
+            return;
+        }
+        //если нажали цифру или знак
+        textArea.append(e.getActionCommand());
+        listenerClick.buttonNUMBclick(e.getActionCommand());
+
+    }
+
     private JFrame jfrm = new JFrame("Calculator");
     public JTextArea textArea = new JTextArea();
 
@@ -27,6 +49,7 @@ class UI extends JPanel{
     private JButton b0 = new JButton("0");
     private JButton bEquality = new JButton("=");
     private JButton bSub = new JButton("-");
+    public ListenerClick listenerClick;
 
 
     UI(){
@@ -36,33 +59,34 @@ class UI extends JPanel{
         jfrm.add(this);
         jfrm.setVisible(true);
     }
-    UI(int windowWidth, int windowHeight, int sizeFont){
+    UI(int windowWidth, int windowHeight, int sizeFont, ListenerClick listener){
         //настройки окна с параметрами
         setFrame(windowWidth, windowHeight);
         setFont(sizeFont);
+        listenerClick = listener;
+        addListener();
         setPanel();
         jfrm.add(this);
-      //  addListener();
         jfrm.setVisible(true);
     }
-   /* private void addListener(){
-        b0.addActionListener(listenerAction);
-        b1.addActionListener(listenerAction);
-        b2.addActionListener(listenerAction);
-        b3.addActionListener(listenerAction);
-        b4.addActionListener(listenerAction);
-        b5.addActionListener(listenerAction);
-        b6.addActionListener(listenerAction);
-        b7.addActionListener(listenerAction);
-        b8.addActionListener(listenerAction);
-        b9.addActionListener(listenerAction);
-        bAdd.addActionListener(listenerAction);
-        bDiv.addActionListener(listenerAction);
-        bEquality.addActionListener(listenerAction);
-        bMult.addActionListener(listenerAction);
-        bSub.addActionListener(listenerAction);
-
-    }*/
+    private void addListener(){
+        b0.addActionListener(this);
+        b1.addActionListener(this);
+        b2.addActionListener(this);
+        b3.addActionListener(this);
+        b4.addActionListener(this);
+        b5.addActionListener(this);
+        b6.addActionListener(this);
+        b7.addActionListener(this);
+        b8.addActionListener(this);
+        b9.addActionListener(this);
+        bAdd.addActionListener(this);
+        bDiv.addActionListener(this);
+        bEquality.addActionListener(this);
+        bMult.addActionListener(this);
+        bSub.addActionListener(this);
+        bC.addActionListener(this);
+    }
     private void setPanel(){
         //компановщик
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
