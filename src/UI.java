@@ -8,23 +8,20 @@ class UI extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-       //если нажали C
+        //если нажали C
         if (e.getSource() == bC) {
             textArea.setText("");
             listenerClick.buttonC();
             return;
         }
         if (e.getSource() == bEquality){
-            System.out.println("textarea:" + textArea.getText());
             listenerClick.buttonEq(textArea.getText());
             return;
         }
         //если нажали цифру или знак
         textArea.append(e.getActionCommand());
         listenerClick.buttonNUMBclick(e.getActionCommand());
-
     }
-
     private JFrame jfrm = new JFrame("Calculator");
     public JTextArea textArea = new JTextArea();
 
@@ -51,7 +48,6 @@ class UI extends JPanel implements ActionListener {
     private JButton bSub = new JButton("-");
     public ListenerClick listenerClick;
 
-
     UI(){
         //настройки окна по умолчанию
         setFrame(windowWidth, windowHeight);
@@ -68,6 +64,10 @@ class UI extends JPanel implements ActionListener {
         setPanel();
         jfrm.add(this);
         jfrm.setVisible(true);
+    }
+
+    public void setTextArea(String str) {
+        this.textArea.setText(str);
     }
     private void addListener(){
         b0.addActionListener(this);
@@ -100,13 +100,11 @@ class UI extends JPanel implements ActionListener {
         jfrm.setSize(width, height);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
     public void setFont(int size){
         //изменение размера шрифта вводимого с клавиатуры
         Font font = new Font(Font.SERIF, Font.BOLD, size);
         textArea.setFont(font);
     }
-
     private JPanel setButtons(){
         //вспомогательная панель
         JPanel btnsPanel = new JPanel();
