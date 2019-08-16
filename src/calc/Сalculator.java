@@ -1,8 +1,3 @@
-interface ListenerClick {
-    public void buttonNUMBclick(String numb);
-    public void buttonC();
-    public void buttonEq(String str);
-}
 class Calculator implements ListenerClick {
     public UI ui;
     public String res = new String();
