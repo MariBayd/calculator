@@ -1,35 +1,18 @@
-import javax . swing.*;
+package calc;
+
+import javax.swing.*;
 import java.awt.*;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class UI extends JPanel implements ActionListener {
+public class CalculatorPanel extends JPanel implements ActionListener {
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        //если нажали C
-        if (e.getSource() == bC) {
-            textArea.setText("");
-            listenerClick.buttonC();
-            return;
-        }
-        if (e.getSource() == bEquality){
-            listenerClick.buttonEq(textArea.getText());
-            return;
-        }
-        //если нажали цифру или знак
-        textArea.append(e.getActionCommand());
-        listenerClick.buttonNUMBclick(e.getActionCommand());
-    }
-    private JFrame jfrm = new JFrame("Calculator");
     public JTextArea textArea = new JTextArea();
-
     public int windowWidth = 250;
     public int windowHeight = 300;
     public int sizeFont = 32;
-
-
+    public ListenerClick listenerClick;
+    private JFrame jfrm = new JFrame("Calculator");
     private JButton b1 = new JButton("1");
     private JButton b2 = new JButton("2");
     private JButton b3 = new JButton("3");
@@ -46,16 +29,16 @@ class UI extends JPanel implements ActionListener {
     private JButton b0 = new JButton("0");
     private JButton bEquality = new JButton("=");
     private JButton bSub = new JButton("-");
-    public ListenerClick listenerClick;
 
-    UI(){
+    CalculatorPanel() {
         //настройки окна по умолчанию
         setFrame(windowWidth, windowHeight);
         setFont(sizeFont);
         jfrm.add(this);
         jfrm.setVisible(true);
     }
-    UI(int windowWidth, int windowHeight, int sizeFont, ListenerClick listener){
+
+    CalculatorPanel(int windowWidth, int windowHeight, int sizeFont, ListenerClick listener) {
         //настройки окна с параметрами
         setFrame(windowWidth, windowHeight);
         setFont(sizeFont);
@@ -66,10 +49,28 @@ class UI extends JPanel implements ActionListener {
         jfrm.setVisible(true);
     }
 
-    public void setTextArea(String str) {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //если нажали C
+        if (e.getSource() == bC) {
+            textArea.setText("");
+            listenerClick.buttonC();
+            return;
+        }
+        if (e.getSource() == bEquality) {
+            listenerClick.buttonEq(textArea.getText());
+            return;
+        }
+        //если нажали цифру или знак
+        textArea.append(e.getActionCommand());
+        listenerClick.buttonNUMBclick(e.getActionCommand());
+    }
+
+    public void setTextToArea(String str) {
         this.textArea.setText(str);
     }
-    private void addListener(){
+
+    private void addListener() {
         b0.addActionListener(this);
         b1.addActionListener(this);
         b2.addActionListener(this);
@@ -87,7 +88,8 @@ class UI extends JPanel implements ActionListener {
         bSub.addActionListener(this);
         bC.addActionListener(this);
     }
-    private void setPanel(){
+
+    private void setPanel() {
         //компановщик
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JScrollPane scroll = new JScrollPane(textArea);
@@ -95,20 +97,22 @@ class UI extends JPanel implements ActionListener {
         add(setButtons());
     }
 
-    public void setFrame(int width, int height){
+    public void setFrame(int width, int height) {
         //изменение размеров окна
         jfrm.setSize(width, height);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    public void setFont(int size){
+
+    public void setFont(int size) {
         //изменение размера шрифта вводимого с клавиатуры
         Font font = new Font(Font.SERIF, Font.BOLD, size);
         textArea.setFont(font);
     }
-    private JPanel setButtons(){
+
+    private JPanel setButtons() {
         //вспомогательная панель
         JPanel btnsPanel = new JPanel();
-        GridLayout layout = new GridLayout(4,4);
+        GridLayout layout = new GridLayout(4, 4);
         btnsPanel.setLayout(layout);
         //добавление кнопок
         btnsPanel.add(b1);
