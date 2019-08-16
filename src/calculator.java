@@ -1,7 +1,3 @@
-import javax . swing.*;
-import javax.swing.JOptionPane;
-import java.util.Stack;
-
 interface ListenerClick {
     public void buttonNUMBclick(String numb);
     public void buttonC();
@@ -26,15 +22,4 @@ class Calculator implements ListenerClick {
         PolishNotation polishNot = new PolishNotation();
         if (polishNot.checkSTR(res)) ui.setTextArea(Float.toString(polishNot.Count(res)));
     }
-
-    public static void main(String args[]){
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Calculator();
-            }
-        });
-    }
-
 }
