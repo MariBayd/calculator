@@ -8,7 +8,6 @@ public class App {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                System.out.println("suka rabotai");
                 new Calculator();
             }
         });
