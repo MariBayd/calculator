@@ -1,5 +1,4 @@
 import calc.Calculator;
-
 import javax.swing.*;
 
 public class App {

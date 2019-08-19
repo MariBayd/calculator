@@ -11,8 +11,14 @@ public class CalculatorPanel extends JPanel implements ActionListener {
     public int windowWidth = 250;
     public int windowHeight = 300;
     public int sizeFont = 32;
+    public int menuBarHeight = 18;
     public ListenerClick listenerClick;
     private JFrame jfrm = new JFrame("Calculator");
+    public JMenuBar menuBar = new JMenuBar();
+    public JMenu history = new JMenu("История");
+    public JMenuItem saveTofile = new JMenuItem("Сохранить в файл");
+    public JMenuItem readFromFile = new JMenuItem("Загрузить из файла");
+    public JMenuItem showHistory = new JMenuItem("Показать историю");
     private JButton b1 = new JButton("1");
     private JButton b2 = new JButton("2");
     private JButton b3 = new JButton("3");
@@ -47,6 +53,18 @@ public class CalculatorPanel extends JPanel implements ActionListener {
         setPanel();
         jfrm.add(this);
         jfrm.setVisible(true);
+    }
+
+    private JPanel setHistory(){
+        JPanel panelHistiry = new JPanel();
+        panelHistiry.setLayout(new FlowLayout(FlowLayout.LEADING));
+        history.add(saveTofile);
+        history.add(readFromFile);
+        history.add(showHistory);
+        menuBar.add(history);
+        panelHistiry.add(menuBar);
+        panelHistiry.setMaximumSize(new Dimension(jfrm.getWidth(), menuBarHeight));
+        return panelHistiry;
     }
 
     @Override
@@ -93,6 +111,7 @@ public class CalculatorPanel extends JPanel implements ActionListener {
         //компановщик
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JScrollPane scroll = new JScrollPane(textArea);
+        add(setHistory());
         add(scroll);
         add(setButtons());
     }
