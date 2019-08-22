@@ -13,12 +13,12 @@ public class CalculatorPanel extends JPanel implements ActionListener {
     public int sizeFont = 32;
     public int menuBarHeight = 18;
     public ListenerClick listenerClick;
-    private JFrame jfrm = new JFrame("Calculator");
+    public JFrame jfrm = new JFrame("Calculator");
     public JMenuBar menuBar = new JMenuBar();
-    public JMenu history = new JMenu("РСЃС‚РѕСЂРёСЏ");
-    public JMenuItem saveTofile = new JMenuItem("РЎРѕС…СЂР°РЅРёС‚СЊ РІ С„Р°Р№Р»");
-    public JMenuItem readFromFile = new JMenuItem("Р—Р°РіСЂСѓР·РёС‚СЊ РёР· С„Р°Р№Р»Р°");
-    public JMenuItem showHistory = new JMenuItem("РџРѕРєР°Р·Р°С‚СЊ РёСЃС‚РѕСЂРёСЋ");
+    public JMenu history = new JMenu("История");
+    public JMenuItem saveTofile = new JMenuItem("Сохранить в файл");
+    public JMenuItem readFromFile = new JMenuItem("Загрузить из файла");
+    public JMenuItem showHistory = new JMenuItem("Показать историю");
     private JButton b1 = new JButton("1");
     private JButton b2 = new JButton("2");
     private JButton b3 = new JButton("3");
@@ -37,25 +37,25 @@ public class CalculatorPanel extends JPanel implements ActionListener {
     private JButton bSub = new JButton("-");
 
     CalculatorPanel() {
-        //РЅР°СЃС‚СЂРѕР№РєРё РѕРєРЅР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+        //настройки окна по умолчанию
         setFrame(windowWidth, windowHeight);
         setFont(sizeFont);
         jfrm.add(this);
         jfrm.setVisible(true);
     }
 
-    CalculatorPanel(int windowWidth, int windowHeight, int sizeFont, ListenerClick listener) {
-        //РЅР°СЃС‚СЂРѕР№РєРё РѕРєРЅР° СЃ РїР°СЂР°РјРµС‚СЂР°РјРё
+    CalculatorPanel(int windowWidth, int windowHeight, int sizeFont, ListenerClick listenerClick) {
+        //настройки окна с параметрами
         setFrame(windowWidth, windowHeight);
         setFont(sizeFont);
-        listenerClick = listener;
+        this.listenerClick = listenerClick;
         addListener();
         setPanel();
         jfrm.add(this);
         jfrm.setVisible(true);
     }
 
-    private JPanel setHistory(){
+    private JPanel setHistory() {
         JPanel panelHistiry = new JPanel();
         panelHistiry.setLayout(new FlowLayout(FlowLayout.LEADING));
         history.add(saveTofile);
@@ -69,7 +69,7 @@ public class CalculatorPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //РµСЃР»Рё РЅР°Р¶Р°Р»Рё C
+        //если нажали C
         if (e.getSource() == bC) {
             textArea.setText("");
             listenerClick.buttonC();
@@ -79,13 +79,32 @@ public class CalculatorPanel extends JPanel implements ActionListener {
             listenerClick.buttonEq(textArea.getText());
             return;
         }
-        //РµСЃР»Рё РЅР°Р¶Р°Р»Рё С†РёС„СЂСѓ РёР»Рё Р·РЅР°Рє
-        textArea.append(e.getActionCommand());
-        listenerClick.buttonNUMBclick(e.getActionCommand());
+        if (e.getSource() == showHistory) {
+           listenerClick.buttonShowHistory();
+        }
+        if (e.getSource() == readFromFile) {
+            listenerClick.buttonReadFromFile();
+        }
+        if (e.getSource() == saveTofile) {
+            listenerClick.buttonSaveToFile();
+        }
+        //если нажали цифру или знак
+        if (e.getSource() == b0 || e.getSource() == b1 || e.getSource() == b2
+                || e.getSource() == b3 || e.getSource() == b4 || e.getSource() == b5
+                || e.getSource() == b6 || e.getSource() == b7 || e.getSource() == b8
+                || e.getSource() == b9 || e.getSource() == bAdd || e.getSource() == bC
+                || e.getSource() == bDiv || e.getSource() == bEquality || e.getSource() == bMult
+                || e.getSource() == bSub) {
+            textArea.append(e.getActionCommand());
+            //   listenerClick.buttonNUMBclick(e.getActionCommand());
+        }
     }
 
     public void setTextToArea(String str) {
         this.textArea.setText(str);
+    }
+    public String getTextArea(){
+        return textArea.getText();
     }
 
     private void addListener() {
@@ -105,10 +124,13 @@ public class CalculatorPanel extends JPanel implements ActionListener {
         bMult.addActionListener(this);
         bSub.addActionListener(this);
         bC.addActionListener(this);
+        showHistory.addActionListener(this);
+        readFromFile.addActionListener(this);
+        saveTofile.addActionListener(this);
     }
 
     private void setPanel() {
-        //РєРѕРјРїР°РЅРѕРІС‰РёРє
+        //компановщик
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JScrollPane scroll = new JScrollPane(textArea);
         add(setHistory());
@@ -117,23 +139,23 @@ public class CalculatorPanel extends JPanel implements ActionListener {
     }
 
     public void setFrame(int width, int height) {
-        //РёР·РјРµРЅРµРЅРёРµ СЂР°Р·РјРµСЂРѕРІ РѕРєРЅР°
+        //изменение размеров окна
         jfrm.setSize(width, height);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void setFont(int size) {
-        //РёР·РјРµРЅРµРЅРёРµ СЂР°Р·РјРµСЂР° С€СЂРёС„С‚Р° РІРІРѕРґРёРјРѕРіРѕ СЃ РєР»Р°РІРёР°С‚СѓСЂС‹
+        //изменение размера шрифта вводимого с клавиатуры
         Font font = new Font(Font.SERIF, Font.BOLD, size);
         textArea.setFont(font);
     }
 
     private JPanel setButtons() {
-        //РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ РїР°РЅРµР»СЊ
+        //вспомогательная панель
         JPanel btnsPanel = new JPanel();
         GridLayout layout = new GridLayout(4, 4);
         btnsPanel.setLayout(layout);
-        //РґРѕР±Р°РІР»РµРЅРёРµ РєРЅРѕРїРѕРє
+        //добавление кнопок
         btnsPanel.add(b1);
         btnsPanel.add(b2);
         btnsPanel.add(b3);

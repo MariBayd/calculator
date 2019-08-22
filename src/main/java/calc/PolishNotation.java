@@ -43,7 +43,7 @@ public class PolishNotation {
                 }
                 //проверка положения скобки )
                 if (checkBracketClose(c)) {
-                    if (i == str.length() || checkSymbol(str.charAt(i + 1))) continue;
+                    if (i == str.length() - 1 || checkSymbol(str.charAt(i + 1))) continue;
                     else {
                         JOptionPane.showMessageDialog(new JFrame(), "Ошибка ввода!", "Dialog",
                                 JOptionPane.ERROR_MESSAGE);

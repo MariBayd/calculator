@@ -1,3 +1,12 @@
 # Intellij
 .idea/
-out/
+.gradle/
+build/
+src\test\
+src\main\resources
+gradle
+build.gradle
+gradlew
+gradlew.bat
+nullnull
+settings.gradle
