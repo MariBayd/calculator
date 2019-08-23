@@ -29,7 +29,7 @@ public class Calculator implements ListenerClick {
         }
         PolishNotation polishNot = new PolishNotation();
         if (polishNot.checkSTR(inputStr)) {
-            outputString = Float.toString(polishNot.Count(inputStr));
+            outputString = Float.toString(polishNot.count(inputStr));
             calculatorPanel.setTextToArea(outputString);
             history = historyWriter.setHistory(inputStr, outputString);
             historyWriter.writeHistoryToFile(history, "history.txt");

@@ -7,7 +7,7 @@ public class PolishNotation {
     PolishNotation() {
     }
 
-    public float Count(String str) {
+    public float count(String str) {
         str = correctStr(str); //скипаем пробелы, заменяем запятые на точки
         //проверка корректности строки
         str = polisNotation(str); //преобразование к польской нотации
