@@ -1,1 +1,0 @@
-{"inputString":"2+9","result":"11.0","data":{"date":{"year":2019,"month":8,"day":23},"time":{"hour":11,"minute":40,"second":30,"nano":251175200}}} 
